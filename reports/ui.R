@@ -13,8 +13,12 @@ shinyUI(fluidPage(
                                c("Week", "Team"),
                                selected = "Week")),
             column(4,
-                   uiOutput("weekOrTeam")
-            )
+                   uiOutput("weekOrTeam")),
+            column(5,
+                   selectInput("minOrQuart",
+                               "Display by minute of quarter?",
+                               c("Minute", "Quarter"),
+                               selected = "Minute"))
       ),
             
       plotOutput("plotTweets")
