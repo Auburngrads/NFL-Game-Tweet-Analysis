@@ -7,8 +7,9 @@ NFL.game.tweets <- mutate(NFL.game.tweets,
                           quarter = ifelse(quarter == 0, 1, quarter))
 
 games <- group_by(NFL.game.tweets, week, home, away) %>%
-      summarise(totalTweets = n()) %>%
-      mutate(hashtag = str_c(away, "vs", home))
+      summarise(totalTweets = n(), length = max(minute)) %>%
+      mutate(tweetsPerMin = as.integer(totalTweets/length), 
+             hashtag = str_c(away, "vs", home))
 
 teamsAway <- select(NFL.game.tweets, week, away) %>% 
       group_by(week, away) %>% 
