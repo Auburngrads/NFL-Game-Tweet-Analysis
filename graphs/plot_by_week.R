@@ -1,12 +1,12 @@
 plot_week_minute <- function(cur_week) {
       
-      week_selected <- filter(no_zero, week == cur_week)
+      week_selected <- filter(NFL.game.tweets, week == cur_week)
       
       ggplot(week_selected, aes(x=minute, fill=home)) + 
             geom_histogram(aes(weights=minute), binwidth = 1, show.legend = FALSE) + 
             facet_wrap( ~ hashtag, ncol=4, scales = "free") +
             teamColScale
-      ggsave(str_c("graphs/week_by_minute/week_", cur_week, "_by_week.pdf"), 
+      ggsave(str_c("graphs/week_by_minute/week_", cur_week, "_by_week.pdf"),
              device = "pdf", dpi = 1600, width = 10, height = 8)
       x = 1
       
