@@ -20,6 +20,15 @@ shinyServer(function(input, output) {
             }
       })
       
+      output$minQuart <- renderUI({
+            if (input$whatBy == "Week" | input$whatBy == "Team") {
+                  selectInput("minOrQuart",
+                              "Display by minute of quarter?",
+                              c("Minute", "Quarter"),
+                              selected = "Minute")
+            }
+      })
+      
       output$plotTweets <- renderPlot({
             
             if (input$whatBy == "Week") {
@@ -62,6 +71,13 @@ shinyServer(function(input, output) {
                               facet_wrap( ~ game_name, ncol=4, scales = "free") +
                               teamColScale
                   }
+            }
+            else if (input$whatBy == "Average per Game") {
+                  ggplot(teams, aes(x = reorder(Team, -AvePerGame), y = AvePerGame, fill = Team)) + 
+                        geom_bar(stat = "identity", show.legend = TRUE) +
+                        theme(axis.text.x = element_text(angle = 45, hjust = 1)) + 
+                        labs(y = "Average Tweets Per Game", x = "Teams") + 
+                        teamColScale
             }
       })
       
